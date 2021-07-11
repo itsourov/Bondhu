@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "358703870569",
+    "project_id": "bondhu-995be",
+    "storage_bucket": "bondhu-995be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358703870569:android:9aee9bb39a498dcb02a8f8",
+        "android_client_info": {
+          "package_name": "net.sourov.bondhu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358703870569-bkdlcj31m3r8skbd1n9p1sah592vilkn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5lUJ7TQcP_jUsz8XoQwzL13gY33jmTRY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358703870569-bkdlcj31m3r8skbd1n9p1sah592vilkn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

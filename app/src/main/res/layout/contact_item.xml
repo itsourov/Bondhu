@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/myFriendViewItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:elevation="6dp"
+    android:padding="5dp"
+    android:background="@drawable/contact_item_background">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageViewOnContactItem"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/user"
+        app:civ_border_color="@color/colorPrimary"
+        app:civ_border_width="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/contactNameOnContactItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Loading name"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/editOnContactItem"
+        app:layout_constraintStart_toEndOf="@+id/imageViewOnContactItem"
+        app:layout_constraintTop_toTopOf="@+id/imageViewOnContactItem" />
+
+    <ImageView
+        android:id="@+id/callOnContactItem"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_call" />
+
+    <TextView
+        android:id="@+id/addressOnContactItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="SIngra,Shalikha,Magura"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/contactNameOnContactItem"
+        app:layout_constraintStart_toStartOf="@+id/contactNameOnContactItem"
+        app:layout_constraintTop_toBottomOf="@+id/contactNameOnContactItem" />
+
+    <ImageView
+        android:id="@+id/deleteOnContactItem"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/callOnContactItem"
+        app:layout_constraintEnd_toStartOf="@+id/callOnContactItem"
+        app:layout_constraintTop_toTopOf="@+id/callOnContactItem"
+        android:src="@drawable/delete" />
+
+    <ImageView
+        android:id="@+id/editOnContactItem"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/deleteOnContactItem"
+        app:layout_constraintEnd_toStartOf="@+id/deleteOnContactItem"
+        app:layout_constraintTop_toTopOf="@+id/deleteOnContactItem"
+        android:src="@drawable/ic_edit" />
+</androidx.constraintlayout.widget.ConstraintLayout>
