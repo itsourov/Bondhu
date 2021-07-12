@@ -88,32 +88,79 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageOnAddFD">
-
-                <Button
-                    android:id="@+id/openGalleryOnAddFd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
                     android:layout_margin="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_bg"
-                    android:drawableLeft="@drawable/ic_image"
-                    android:drawableTint="@color/white"
-                    android:text="Open gallery" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/openCameraOnAddFD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_bg"
-                    android:drawableLeft="@drawable/ic_camera"
-                    android:drawableTint="@color/white"
-                    android:text="Open Camera" />
+                    <LinearLayout
+                        android:id="@+id/openGalleryOnAddFd"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_grey"
+                        android:elevation="5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/pp_gallery" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Choice from gallery"
+                            android:textAlignment="center"
+                            android:textColor="@color/black_white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/openCameraOnAddFD"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_grey"
+                        android:elevation="5dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="10dp"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/pp_camera" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Take a Photo"
+                            android:textAlignment="center"
+                            android:textColor="@color/black_white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
             </LinearLayout>
 
             <EditText

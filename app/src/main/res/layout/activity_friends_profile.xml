@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout_friendProfile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5"
+    android:background="@color/mainBg"
     tools:context=".FriendsProfile"
     tools:openDrawer="end">
 
@@ -116,7 +116,7 @@
                         android:layout_weight="1"
                         android:text="Loading..."
                         android:textAlignment="viewEnd"
-                        android:textColor="#585858"
+                        android:textColor="@color/black_yellow"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -152,7 +152,7 @@
                         android:layout_weight="1"
                         android:text="Loading..."
                         android:textAlignment="viewEnd"
-                        android:textColor="#585858"
+                        android:textColor="@color/black_yellow"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -188,7 +188,7 @@
                         android:layout_weight="1"
                         android:text="Loading..."
                         android:textAlignment="viewEnd"
-                        android:textColor="#585858"
+                        android:textColor="@color/black_yellow"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -224,7 +224,7 @@
                         android:layout_weight="1"
                         android:text="Loading..."
                         android:textAlignment="viewEnd"
-                        android:textColor="#585858"
+                        android:textColor="@color/black_yellow"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -260,7 +260,7 @@
                         android:layout_weight="1"
                         android:text="Loading..."
                         android:textAlignment="viewEnd"
-                        android:textColor="#585858"
+                        android:textColor="@color/black_yellow"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -303,7 +303,7 @@
                             android:layout_marginBottom="10dp"
                             android:text="Delete this Friend"
                             android:textAlignment="center"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_white"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -332,7 +332,7 @@
                             android:layout_marginBottom="10dp"
                             android:text="Edit this Friend"
                             android:textAlignment="center"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_white"
                             android:textStyle="bold" />
                     </LinearLayout>
 

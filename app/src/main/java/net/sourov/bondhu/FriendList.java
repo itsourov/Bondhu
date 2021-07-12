@@ -2,12 +2,16 @@ package net.sourov.bondhu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -50,6 +54,8 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
+    TextView nothingFoundTextOnFriendList;
+
 
 
     @Override
@@ -61,6 +67,7 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
 
 
 
+        nothingFoundTextOnFriendList= findViewById(R.id.nothingFoundTextOnFriendList);
         refreshLayoutFL = findViewById(R.id.refreshLayoutFL);
 
 
@@ -104,9 +111,9 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
         });
 
         refreshLayoutFL.setOnRefreshListener(() -> {
-            displayContacts();
+          //  displayContacts();
             mAdapter.notifyDataSetChanged();
-
+            refreshLayoutFL.setRefreshing(false);
         });
 
 
@@ -124,7 +131,7 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid())
                 .child("Friends");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.orderByChild("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
@@ -145,8 +152,65 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu,menu);
+        MenuItem item = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) item.getActionView();
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                processSearch(query);
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                processSearch(newText);
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void processSearch(String query) {
+        contactsList =  new ArrayList<>();
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid())
+                .child("Friends");
+        reference.orderByChild("name").startAt(query).endAt(query+"\uf8ff").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+
+                if (snapshot.getChildrenCount()==0){
+                    nothingFoundTextOnFriendList.setVisibility(View.VISIBLE);
+                    contactsList.clear();
+                    mAdapter = new ContactAdapter(FriendList.this,contactsList);
+                    recyclerView.setAdapter(mAdapter);
+                }else {
+                    nothingFoundTextOnFriendList.setVisibility(View.GONE);
+                    contactsList.clear();
+                    for (DataSnapshot ds: snapshot.getChildren()){
+
+                        Contacts contacts = ds.getValue(Contacts.class);
+
+                        contactsList.add(contacts);
+                        mAdapter = new ContactAdapter(FriendList.this,contactsList);
+                        recyclerView.setAdapter(mAdapter);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {

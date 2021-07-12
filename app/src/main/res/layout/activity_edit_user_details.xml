@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout_EditUserDetails"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5"
+    android:background="@color/mainBg"
     tools:context=".EditUserDetails"
     tools:openDrawer="end">
 
@@ -122,7 +122,7 @@
                             android:layout_marginBottom="10dp"
                             android:text="Choice from gallery"
                             android:textAlignment="center"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_white"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -151,7 +151,7 @@
                             android:layout_marginBottom="10dp"
                             android:text="Take a Photo"
                             android:textAlignment="center"
-                            android:textColor="#000000"
+                            android:textColor="@color/black_white"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -164,7 +164,7 @@
                     android:fontFamily="@font/carter_one"
                     android:text="Edit Your Details:"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/black_yellow"
                     android:textSize="24sp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -199,7 +199,7 @@
                         android:background="@drawable/round_border"
                         android:padding="10dp"
                         android:text="Loading..."
-                        android:textColor="@color/black"
+                        android:textColor="@color/black_white"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -228,15 +228,15 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:inputType="phone"
                         android:id="@+id/numberOnEditUserDetails"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/round_border"
+                        android:inputType="phone"
                         android:padding="10dp"
                         android:text="Loading..."
-                        android:textColor="@color/black"
+                        android:textColor="@color/black_white"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -265,16 +265,16 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:focusable="false"
-                        android:inputType="textEmailAddress"
                         android:id="@+id/emailOnEditUserDetails"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/round_border"
+                        android:focusable="false"
+                        android:inputType="textEmailAddress"
                         android:padding="10dp"
                         android:text="Loading..."
-                        android:textColor="@color/black"
+                        android:textColor="@color/black_white"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -303,15 +303,15 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:focusable="false"
                         android:id="@+id/dateOnEditUserDetails"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/round_border"
+                        android:focusable="false"
                         android:padding="10dp"
                         android:text="Loading..."
-                        android:textColor="@color/black"
+                        android:textColor="@color/black_white"
                         android:textSize="16sp" />
 
                 </LinearLayout>

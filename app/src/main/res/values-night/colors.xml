@@ -8,10 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="mainBg">#F5F5F5</color>
-    <color name="white_dark">#FFFFFF</color>
-    <color name="grey_blue">#f1f1f1</color>
-    <color name="black_white">#FF000000</color>
-    <color name="black_yellow">#000000</color>
+    <color name="mainBg">#2C2C2C</color>
+    <color name="white_dark">#423F3E</color>
+    <color name="black_white">#FFFFFF</color>
+    <color name="grey_blue">#66C2FF</color>
+    <color name="black_yellow">#FFF308</color>
     <color name="colorPrimary">#0099ff</color>
 </resources>
