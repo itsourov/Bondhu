@@ -161,27 +161,24 @@ public class LoginActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithCredential:success");
-                            if (!task.getResult().getAdditionalUserInfo().isNewUser()){
-                                startActivity(new Intent(LoginActivity.this,Dashboard.class));
-                                finish();
-                            }else {
-                                sendUserDataFromGmail();
-                                Toast.makeText(LoginActivity.this,"Account Created with the name "+ mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "signInWithCredential:success");
+                        if (!task.getResult().getAdditionalUserInfo().isNewUser()){
+                            startActivity(new Intent(LoginActivity.this,Dashboard.class));
+                            finish();
+                        }else {
+                            sendUserDataFromGmail();
+                            Toast.makeText(LoginActivity.this,"Account Created with the name "+ mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
 
-                            }
-
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            myToast.setText(task.getException().getMessage());
-                            myToast.show();
                         }
+
+
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        myToast.setText(task.getException().getMessage());
+                        myToast.show();
                     }
                 });
     }

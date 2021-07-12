@@ -13,6 +13,5 @@
     <item
         android:id="@+id/download_image_menu"
         android:orderInCategory="102"
-        android:icon="@drawable/pp_download"
         android:title="Download Image"/>
 </menu>
