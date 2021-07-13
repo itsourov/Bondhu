@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import net.sourov.bondhu.auth.LoginActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 

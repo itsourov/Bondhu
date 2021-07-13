@@ -10,9 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,13 +32,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.yalantis.ucrop.UCrop;
 
+import net.sourov.bondhu.auth.LoginActivity;
+
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -137,18 +134,8 @@ public class EditContactDetails extends AppCompatActivity implements NavigationV
             dateOnEditContactDetails.setText(date);
         };
 
-        findViewById(R.id.openGalleryOnEditContactDetails).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGalleryIntent();
-            }
-        });
-        findViewById(R.id.openCameraOnEditContactDetails).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCameraIntent();
-            }
-        });
+        findViewById(R.id.openGalleryOnEditContactDetails).setOnClickListener(v -> openGalleryIntent());
+        findViewById(R.id.openCameraOnEditContactDetails).setOnClickListener(v -> openCameraIntent());
 
 
         findViewById(R.id.updateProfileBtnOnEditContactDetails).setOnClickListener(v -> {
@@ -248,7 +235,7 @@ public class EditContactDetails extends AppCompatActivity implements NavigationV
 
 
     private void setDetails() {
-        Glide.with(getApplicationContext()).load(image_url).placeholder(R.drawable.user).into(ImageOnEditContactDetails);
+        Glide.with(getApplicationContext()).load(image_url).placeholder(R.drawable.loading).into(ImageOnEditContactDetails);
         nameTextOnEditContactDetails.setText(name);
 
         nameOnEditContactDetails.setText(name);
@@ -293,7 +280,6 @@ public class EditContactDetails extends AppCompatActivity implements NavigationV
 
     private void sendData() {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("Friends").child(unique_id);
-        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("name", name);

@@ -1,5 +1,6 @@
 package net.sourov.bondhu;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import net.sourov.bondhu.Model.Users;
+import net.sourov.bondhu.auth.LoginActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -128,7 +130,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                     emailOnDashboard.setText(email);
                     numberOnDashboard.setText(number);
                     dateOnDashboard.setText(dateOfBirth);
-                    Glide.with(getApplicationContext()).load(imageUrl).placeholder(R.drawable.user).into(ImageOnDashboard);
+                    Glide.with(getApplicationContext()).load(imageUrl).placeholder(R.drawable.loading).into(ImageOnDashboard);
                 }else {
 
                     nameTextOnDashboard.setText(notFound);
@@ -191,5 +193,24 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
             finish();
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Dashboard.this);
+            builder.setTitle("Confirm Exit!!!");
+            builder.setMessage("Are you sure you want to exit this application?");
+            builder.setPositiveButton("Yes", (dialog, which) -> super.onBackPressed());
+            builder.setNegativeButton("No", (dialog, which) -> {
+
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+        }
+
     }
 }

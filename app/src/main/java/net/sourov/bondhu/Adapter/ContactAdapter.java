@@ -28,6 +28,7 @@ import net.sourov.bondhu.R;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -57,20 +58,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
         Contacts contacts = contactsList.get(position);
         holder.contactName.setText(contacts.getName());
         holder.addressOnContactItem.setText(contacts.getAddress());
-        Glide.with(context).load(contacts.getImageUrl()).placeholder(R.drawable.user).into(holder.contactImg);
+        Glide.with(context).load(contacts.getImageUrl()).placeholder(R.drawable.loading).into(holder.contactImg);
 
-        holder.editOnContactItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goTOFriendProfile = new Intent(context, EditContactDetails.class);
-                goTOFriendProfile.putExtra("name", contacts.getName());
-                goTOFriendProfile.putExtra("number", contacts.getNumber());
-                goTOFriendProfile.putExtra("dateOfBirth", contacts.getDateOfBirth());
-                goTOFriendProfile.putExtra("address", contacts.getAddress());
-                goTOFriendProfile.putExtra("image_url", contacts.getImageUrl());
-                goTOFriendProfile.putExtra("unique_id", contacts.getUniqueID());
-                context.startActivity(goTOFriendProfile);
-            }
+        holder.editOnContactItem.setOnClickListener(v -> {
+            Intent goTOFriendProfile = new Intent(context, EditContactDetails.class);
+            goTOFriendProfile.putExtra("name", contacts.getName());
+            goTOFriendProfile.putExtra("number", contacts.getNumber());
+            goTOFriendProfile.putExtra("dateOfBirth", contacts.getDateOfBirth());
+            goTOFriendProfile.putExtra("address", contacts.getAddress());
+            goTOFriendProfile.putExtra("image_url", contacts.getImageUrl());
+            goTOFriendProfile.putExtra("unique_id", contacts.getUniqueID());
+            context.startActivity(goTOFriendProfile);
         });
         holder.callOnContactItem.setOnClickListener(v -> {
 
@@ -80,49 +78,43 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
             context.startActivity(phoneIntent);
 
         });
-        holder.deleteOnContactItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.deleteOnContactItem.setOnClickListener(v -> {
 
-                FirebaseAuth mAuth;
-                DatabaseReference reference;
-                mAuth = FirebaseAuth.getInstance();
-                reference = FirebaseDatabase.getInstance().getReference("Users")
-                        .child(mAuth.getCurrentUser().getUid()).child("Friends").child(contacts.getUniqueID());
+            FirebaseAuth mAuth;
+            DatabaseReference reference;
+            mAuth = FirebaseAuth.getInstance();
+            reference = FirebaseDatabase.getInstance().getReference("Users")
+                    .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).child("Friends").child(contacts.getUniqueID());
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Confirm deleting " + contacts.getName() + " ...");
-                builder.setIcon(R.drawable.delete);
-                builder.setMessage("Are you sure you want to delete " + contacts.getName() + " from your friend list?");
-                builder.setPositiveButton("Yes", (dialog, which) -> reference.removeValue().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("Confirm deleting " + contacts.getName() + " ...");
+            builder.setIcon(R.drawable.delete);
+            builder.setMessage("Are you sure you want to delete " + contacts.getName() + " from your friend list?");
+            builder.setPositiveButton("Yes", (dialog, which) -> reference.removeValue().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(context, "deleted", Toast.LENGTH_SHORT).show();
 
-                    } else {
-                        Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }));
-                builder.setNegativeButton("No", (dialog, which) -> {
+                } else {
+                    Toast.makeText(context, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }));
+            builder.setNegativeButton("No", (dialog, which) -> {
 
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
 
-            }
         });
-        holder.myFriendViewItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goTOFriendProfile = new Intent(context, FriendsProfile.class);
-                goTOFriendProfile.putExtra("name", contacts.getName());
-                goTOFriendProfile.putExtra("number", contacts.getNumber());
-                goTOFriendProfile.putExtra("dateOfBirth", contacts.getDateOfBirth());
-                goTOFriendProfile.putExtra("address", contacts.getAddress());
-                goTOFriendProfile.putExtra("image_url", contacts.getImageUrl());
-                goTOFriendProfile.putExtra("fd_added_date", contacts.getFd_added_date());
-                goTOFriendProfile.putExtra("unique_id", contacts.getUniqueID());
-                context.startActivity(goTOFriendProfile);
-            }
+        holder.myFriendViewItem.setOnClickListener(v -> {
+            Intent goTOFriendProfile = new Intent(context, FriendsProfile.class);
+            goTOFriendProfile.putExtra("name", contacts.getName());
+            goTOFriendProfile.putExtra("number", contacts.getNumber());
+            goTOFriendProfile.putExtra("dateOfBirth", contacts.getDateOfBirth());
+            goTOFriendProfile.putExtra("address", contacts.getAddress());
+            goTOFriendProfile.putExtra("image_url", contacts.getImageUrl());
+            goTOFriendProfile.putExtra("fd_added_date", contacts.getFd_added_date());
+            goTOFriendProfile.putExtra("unique_id", contacts.getUniqueID());
+            context.startActivity(goTOFriendProfile);
         });
 
     }
@@ -132,7 +124,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactH
         return contactsList.size();
     }
 
-    class ContactHolder extends RecyclerView.ViewHolder{
+    static class ContactHolder extends RecyclerView.ViewHolder{
 
         CircleImageView contactImg;
         TextView contactName,addressOnContactItem;

@@ -10,9 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,16 +36,14 @@ import com.google.firebase.storage.StorageReference;
 import com.yalantis.ucrop.UCrop;
 
 import net.sourov.bondhu.Model.Users;
+import net.sourov.bondhu.auth.LoginActivity;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -247,7 +243,7 @@ public class EditUserDetails extends AppCompatActivity implements NavigationView
 
     private void setDetails() {
 
-        Glide.with(getApplicationContext()).load(image_url).placeholder(R.drawable.user).into(ImageOnEditUserDetails);
+        Glide.with(getApplicationContext()).load(image_url).placeholder(R.drawable.loading).into(ImageOnEditUserDetails);
         nameTextOnEditUserDetails.setText(name);
 
         nameOnEditUserDetails.setText(name);
@@ -320,6 +316,7 @@ public class EditUserDetails extends AppCompatActivity implements NavigationView
             if (task.isSuccessful()) {
                 myToast.setText("data sent to database");
                 myToast.show();
+                backToaDashboard();
             }
 
         });
@@ -345,5 +342,15 @@ public class EditUserDetails extends AppCompatActivity implements NavigationView
             finish();
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+       backToaDashboard();
+    }
+
+    private void backToaDashboard() {
+        startActivity(new Intent(EditUserDetails.this,Dashboard.class));
+        finish();
     }
 }

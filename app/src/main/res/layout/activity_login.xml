@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".auth.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -90,40 +90,20 @@
             app:layout_constraintTop_toBottomOf="@+id/inputEmailOnLogin" />
 
 
-        <RelativeLayout
+        <Button
             android:id="@+id/btnGetOtpOnMobileAuth"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/round_bg"
-
+            android:text="Log In"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputPasswordOnLogin">
+            app:layout_constraintTop_toBottomOf="@+id/inputPasswordOnLogin" />
 
-            <com.github.ybq.android.spinkit.SpinKitView
-                android:id="@+id/spin_kitOnMobileAuth"
-                style="@style/SpinKitView.Circle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_toStartOf="@+id/textInsideButtonOnMobileAuth"
-                android:padding="5dp"
-                android:visibility="gone"
-                app:SpinKit_Color="@color/white" />
-
-            <TextView
-                android:id="@+id/textInsideButtonOnMobileAuth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Log in"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
 
         <TextView
             android:id="@+id/forgotPasswordOnLogin"
@@ -201,7 +181,7 @@
             app:layout_constraintTop_toBottomOf="@+id/goToSignUpOnLogin" />
 
         <com.github.ybq.android.spinkit.SpinKitView
-            android:id="@+id/spin_kit2OnMobileAuth"
+            android:id="@+id/spin_kitOnMobileAuth"
             style="@style/SpinKitView.Circle"
             android:layout_width="200dp"
             android:layout_height="200dp"

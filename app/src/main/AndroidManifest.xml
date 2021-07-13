@@ -15,30 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bondhu">
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="net.sourov.bondhu.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
-        <activity android:name=".FriendsProfile"></activity>
+        <activity android:name=".FriendsProfile" />
         <activity android:name=".EditContactDetails" />
         <activity android:name=".ImageViewer" />
         <activity android:name=".AddFriends" />
         <activity android:name=".FriendList" />
-        <activity android:name=".UploadProfilePic" />
         <activity android:name=".EditUserDetails" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".auth.SignUpActivity" />
         <activity android:name=".Dashboard" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".auth.LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

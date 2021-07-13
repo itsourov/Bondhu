@@ -41,7 +41,7 @@ public class ImageViewer extends AppCompatActivity {
         Glide
                 .with(ImageViewer.this)
                 .load(image_url)
-                .placeholder(R.drawable.ic_image)
+                .placeholder(R.drawable.loading)
                 .into(imageViewOnImageViewer);
 
     }

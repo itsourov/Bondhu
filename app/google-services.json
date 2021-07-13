@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "358703870569",
+    "firebase_url": "https://bondhu-995be-default-rtdb.firebaseio.com",
     "project_id": "bondhu-995be",
     "storage_bucket": "bondhu-995be.appspot.com"
   },
@@ -13,6 +14,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "358703870569-33fhhim9dkkcrotlgg224ehufg2h782c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.sourov.bondhu",
+            "certificate_hash": "2c7a6997b7a0bf9bb8189a89713dbf34659c3e9c"
+          }
+        },
+        {
+          "client_id": "358703870569-tu28c6nf3lsr1k4h9t90fb2bb6825glj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.sourov.bondhu",
+            "certificate_hash": "5f244af76e3b9e50e93199b12e6bc711f4e65615"
+          }
+        },
         {
           "client_id": "358703870569-bkdlcj31m3r8skbd1n9p1sah592vilkn.apps.googleusercontent.com",
           "client_type": 3

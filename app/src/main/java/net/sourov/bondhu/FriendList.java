@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -31,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import net.sourov.bondhu.Adapter.ContactAdapter;
 import net.sourov.bondhu.Model.Contacts;
+import net.sourov.bondhu.auth.LoginActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -233,6 +233,9 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
         return true;
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(FriendList.this,Dashboard.class));
+        finish();
+    }
 }

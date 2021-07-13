@@ -1,40 +1,38 @@
-package net.sourov.bondhu;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package net.sourov.bondhu.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import net.sourov.bondhu.Dashboard;
+import net.sourov.bondhu.EditUserDetails;
+import net.sourov.bondhu.R;
+
 import java.util.HashMap;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-    String dateOfBirth,name,image_url,number;
+    String name, image_url, number;
     private static final int RC_SIGN_IN = 4;
     private static final String TAG = "tag";
     EditText emailInputOnLogin, passInputOnLogin;
@@ -42,9 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     Toast myToast;
     private FirebaseAuth mAuth;
 
-    ProgressBar progressBar,spin_kit2OnMobileAuth;
-    TextView textInsideButtonOnLogin;
-    RelativeLayout btnLoginOnLogin;
+    ProgressBar spin_kitOnMobileAuth;
+    Button btnLoginOnLogin;
 
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -68,9 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         passInputOnLogin = findViewById(R.id.inputPasswordOnLogin);
         btnLoginOnLogin = findViewById(R.id.btnGetOtpOnMobileAuth);
 
-        progressBar = findViewById(R.id.spin_kitOnMobileAuth);
-        spin_kit2OnMobileAuth = findViewById(R.id.spin_kit2OnMobileAuth);
-        textInsideButtonOnLogin = findViewById(R.id.textInsideButtonOnMobileAuth);
+        spin_kitOnMobileAuth = findViewById(R.id.spin_kitOnMobileAuth);
 
 
         btnLoginOnLogin.setOnClickListener(v -> {
@@ -86,16 +81,17 @@ public class LoginActivity extends AppCompatActivity {
                 passInputOnLogin.requestFocus();
             } else {
                 btnLoginOnLogin.setEnabled(false);
-                progressBar.setVisibility(View.VISIBLE);
-                textInsideButtonOnLogin.setText("Please wait...");
+                spin_kitOnMobileAuth.setVisibility(View.VISIBLE);
+                btnLoginOnLogin.setText("Please wait...");
 
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                    progressBar.setVisibility(View.GONE);
+                    btnLoginOnLogin.setEnabled(true);
+                    btnLoginOnLogin.setText("Log in");
+                    spin_kitOnMobileAuth.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
                         btnLoginOnLogin.setEnabled(true);
                         if (mAuth.getCurrentUser().isEmailVerified()) {
-                            startActivity(new Intent(getApplicationContext(), Dashboard.class));
-                            finish();
+                            goToDashboard();
                         } else {
                             mAuth.getCurrentUser().sendEmailVerification();
                             myToast.setText("Please verify your email. check your inbox or spamBox");
@@ -103,38 +99,24 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        btnLoginOnLogin.setEnabled(true);
-                        textInsideButtonOnLogin.setText("Log in");
-                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                            passInputOnLogin.setError("Password didn't match");
-                            passInputOnLogin.requestFocus();
-                        } else if (task.getException() instanceof FirebaseAuthInvalidUserException) {
-                            emailInputOnLogin.setError("Email wasn't found on server");
-                            emailInputOnLogin.requestFocus();
-                        } else {
-                            myToast.setText(Objects.requireNonNull(task.getException()).getMessage());
-                            myToast.show();
-                        }
+                        myToast.setText(Objects.requireNonNull(task.getException()).getMessage());
+                        myToast.show();
+
                     }
                 });
             }
         });
         findViewById(R.id.goToSignUpOnLogin).setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             finish();
         });
 
-        findViewById(R.id.googleImageOnLogin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
+        findViewById(R.id.googleImageOnLogin).setOnClickListener(v -> signIn());
 
     }
 
-   private void signIn() {
-        spin_kit2OnMobileAuth.setVisibility(View.VISIBLE);
+    private void signIn() {
+        spin_kitOnMobileAuth.setVisibility(View.VISIBLE);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -142,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        spin_kit2OnMobileAuth.setVisibility(View.GONE);
+        spin_kitOnMobileAuth.setVisibility(View.GONE);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -164,12 +146,11 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithCredential:success");
-                        if (!task.getResult().getAdditionalUserInfo().isNewUser()){
-                            startActivity(new Intent(LoginActivity.this,Dashboard.class));
-                            finish();
-                        }else {
+                        if (!task.getResult().getAdditionalUserInfo().isNewUser()) {
+                            goToDashboard();
+                        } else {
                             sendUserDataFromGmail();
-                            Toast.makeText(LoginActivity.this,"Account Created with the name "+ mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Account Created with the name " + mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -184,12 +165,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sendUserDataFromGmail() {
-        spin_kit2OnMobileAuth.setVisibility(View.VISIBLE);
+        spin_kitOnMobileAuth.setVisibility(View.VISIBLE);
         FirebaseUser user = mAuth.getCurrentUser();
 
         assert user != null;
         name = user.getDisplayName();
-        email= user.getEmail();
+        email = user.getEmail();
         number = user.getPhoneNumber();
         image_url = String.valueOf(user.getPhotoUrl());
 
@@ -200,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
         hashMap.put("number", number);
         if (image_url == null) {
             hashMap.put("imageUrl", "https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-260nw-1732584341.jpg");
-        }else {
+        } else {
             hashMap.put("imageUrl", image_url);
         }
 
@@ -210,13 +191,19 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         reference.child("Users").child(mAuth.getCurrentUser().getUid()).child("selfInfo").setValue(hashMap)
                 .addOnCompleteListener(task -> {
-                    spin_kit2OnMobileAuth.setVisibility(View.GONE);
+                    spin_kitOnMobileAuth.setVisibility(View.GONE);
 
                     myToast.setText("information collected by database");
                     myToast.show();
-                    startActivity(new Intent(LoginActivity.this,EditUserDetails.class));
+
+                    startActivity(new Intent(LoginActivity.this, EditUserDetails.class));
                     finish();
                 });
 
+    }
+
+    private void goToDashboard() {
+        startActivity(new Intent(LoginActivity.this, Dashboard.class));
+        finish();
     }
 }
