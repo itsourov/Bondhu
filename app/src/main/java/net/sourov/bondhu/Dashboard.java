@@ -47,6 +47,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     String dateOfBirth, email, name, imageUrl, number;
     String notFound;
 
+    DatabaseReference reference, reference2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,13 +98,13 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
         });
 
         findViewById(R.id.editProfileBtnOnDashboard).setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(),EditUserDetails.class));
+            startActivity(new Intent(getApplicationContext(), EditUserDetails.class));
             finish();
         });
 
         ImageOnDashboard.setOnClickListener(v -> {
-            Intent imagePreview = new Intent(getApplicationContext(),ImageViewer.class);
-            imagePreview.putExtra("image_url",imageUrl);
+            Intent imagePreview = new Intent(getApplicationContext(), ImageViewer.class);
+            imagePreview.putExtra("image_url", imageUrl);
             startActivity(imagePreview);
         });
 
@@ -109,8 +112,9 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
 
     private void getUserDetails() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users")
+        reference = FirebaseDatabase.getInstance().getReference("Users")
                 .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).child("selfInfo");
+        reference.keepSynced(true);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -131,7 +135,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
                     numberOnDashboard.setText(number);
                     dateOnDashboard.setText(dateOfBirth);
                     Glide.with(getApplicationContext()).load(imageUrl).placeholder(R.drawable.loading).into(ImageOnDashboard);
-                }else {
+                } else {
 
                     nameTextOnDashboard.setText(notFound);
                     nameOnDashboard.setText(notFound);
@@ -152,9 +156,11 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     }
 
     private void getTheNumberOfFriends() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
+
+        reference2 = FirebaseDatabase.getInstance().getReference("Users").child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
                 .child("Friends");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference2.keepSynced(true);
+        reference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @com.google.firebase.database.annotations.NotNull DataSnapshot snapshot) {
 
@@ -199,7 +205,7 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(Dashboard.this);
             builder.setTitle("Confirm Exit!!!");
             builder.setMessage("Are you sure you want to exit this application?");

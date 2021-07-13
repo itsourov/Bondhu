@@ -160,9 +160,8 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithCredential:success");
-                        if (!task.getResult().getAdditionalUserInfo().isNewUser()) {
-                            startActivity(new Intent(SignUpActivity.this, Dashboard.class));
-                            finish();
+                        if (task.getResult().getAdditionalUserInfo().isNewUser()) {
+                            goToDashboard();
                         } else {
                             sendUserDataFromGmail();
                             Toast.makeText(SignUpActivity.this, "Account Created with the name " + mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
@@ -176,12 +175,10 @@ public class SignUpActivity extends AppCompatActivity {
                         myToast.setText(task.getException().getMessage());
                         myToast.show();
                     }
-                }).addOnFailureListener(e -> Log.d(TAG, "failureCause: " + e.getMessage()));
+                });
     }
 
     private void sendUserDataFromGmail() {
-
-
         spin_kitOnSignUp.setVisibility(View.VISIBLE);
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -190,26 +187,35 @@ public class SignUpActivity extends AppCompatActivity {
         email = user.getEmail();
         number = user.getPhoneNumber();
         image_url = String.valueOf(user.getPhotoUrl());
-        dateOfBirth = String.valueOf(user.getMetadata());
 
-        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("selfInfo");
 
         HashMap<String, Object> hashMap = new HashMap<>();
-
-            hashMap.put("name", name);
-            hashMap.put("email", email);
-            hashMap.put("number", number);
+        hashMap.put("name", name);
+        hashMap.put("email", email);
+        hashMap.put("number", number);
+        if (image_url == null) {
+            hashMap.put("imageUrl", "https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-260nw-1732584341.jpg");
+        } else {
             hashMap.put("imageUrl", image_url);
-            hashMap.put("dateOFBirth", dateOfBirth);
-            hashMap.put("userID", mAuth.getCurrentUser().getUid());
+        }
 
-        reference.updateChildren(hashMap)
+        hashMap.put("dateOFBirth", user.getMetadata());
+        hashMap.put("userID", mAuth.getCurrentUser().getUid());
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        reference.child("Users").child(mAuth.getCurrentUser().getUid()).child("selfInfo").setValue(hashMap)
                 .addOnCompleteListener(task -> {
-                    Toast.makeText(this, "Info collected by database", Toast.LENGTH_SHORT).show();
-                    goToDashboard();
+                    spin_kitOnSignUp.setVisibility(View.GONE);
+
+                    myToast.setText("information collected by database");
+                    myToast.show();
+
+                    startActivity(new Intent(SignUpActivity.this, EditUserDetails.class));
+                    finish();
                 });
 
     }
+
 
     private void sendData() {
         reference = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser()

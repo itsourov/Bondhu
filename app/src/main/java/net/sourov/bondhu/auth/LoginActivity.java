@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithCredential:success");
-                        if (!task.getResult().getAdditionalUserInfo().isNewUser()) {
+                        if (task.getResult().getAdditionalUserInfo().isNewUser()) {
                             goToDashboard();
                         } else {
                             sendUserDataFromGmail();
