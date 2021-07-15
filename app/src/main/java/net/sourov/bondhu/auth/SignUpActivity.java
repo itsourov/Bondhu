@@ -27,7 +27,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import net.sourov.bondhu.Dashboard;
 import net.sourov.bondhu.EditUserDetails;
 import net.sourov.bondhu.R;
 
@@ -161,7 +160,7 @@ public class SignUpActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithCredential:success");
                         if (task.getResult().getAdditionalUserInfo().isNewUser()) {
-                            goToDashboard();
+                            goToEditUserDetails();
                         } else {
                             sendUserDataFromGmail();
                             Toast.makeText(SignUpActivity.this, "Account Created with the name " + mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
@@ -193,11 +192,7 @@ public class SignUpActivity extends AppCompatActivity {
         hashMap.put("name", name);
         hashMap.put("email", email);
         hashMap.put("number", number);
-        if (image_url == null) {
-            hashMap.put("imageUrl", "https://image.shutterstock.com/image-vector/picture-vector-icon-no-image-260nw-1732584341.jpg");
-        } else {
-            hashMap.put("imageUrl", image_url);
-        }
+        hashMap.put("imageUrl", image_url);
 
         hashMap.put("dateOFBirth", user.getMetadata());
         hashMap.put("userID", mAuth.getCurrentUser().getUid());
@@ -210,8 +205,7 @@ public class SignUpActivity extends AppCompatActivity {
                     myToast.setText("information collected by database");
                     myToast.show();
 
-                    startActivity(new Intent(SignUpActivity.this, EditUserDetails.class));
-                    finish();
+                    goToEditUserDetails();
                 });
 
     }
@@ -234,11 +228,11 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(this, "Info collected by database", Toast.LENGTH_SHORT).show();
                     spin_kitOnSignUp.setVisibility(View.GONE);
 
-                    goToDashboard();
+                    goToEditUserDetails();
                 });
          }
 
-    private void goToDashboard() {
+    private void goToEditUserDetails() {
         startActivity(new Intent(SignUpActivity.this, EditUserDetails.class));
         finish();
     }

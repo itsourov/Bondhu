@@ -1,10 +1,10 @@
 package net.sourov.bondhu;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -13,8 +13,7 @@ import net.sourov.bondhu.auth.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Toast myToast;
-    private FirebaseAuth mAuth;
+    SaveState saveState;
 
 
     @Override
@@ -22,8 +21,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance(); //initialize firebase auth system
-        myToast = Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        saveState = new SaveState(this);
+        if (saveState.getState()==1){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }else if (saveState.getState() ==2){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else if (saveState.getState()==0){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
+
+
+        FirebaseAuth  mAuth = FirebaseAuth.getInstance(); //initialize firebase auth system
 
         if (mAuth.getCurrentUser()!=null){
             startActivity(new Intent(MainActivity.this, Dashboard.class));
@@ -32,8 +47,5 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }
-
     }
-
-
 }

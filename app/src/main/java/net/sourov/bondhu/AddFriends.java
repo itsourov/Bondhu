@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -70,6 +71,8 @@ public class AddFriends extends AppCompatActivity implements NavigationView.OnNa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friends);
+
+
         mAuth = FirebaseAuth.getInstance(); //initialize firebase auth system
         myToast = Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
 

@@ -147,11 +147,11 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "signInWithCredential:success");
                         if (task.getResult().getAdditionalUserInfo().isNewUser()) {
-                            goToDashboard();
-                        } else {
+
                             sendUserDataFromGmail();
                             Toast.makeText(LoginActivity.this, "Account Created with the name " + mAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
-
+                        } else {
+                            goToDashboard();
                         }
 
 

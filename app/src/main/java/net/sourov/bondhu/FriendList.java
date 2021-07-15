@@ -88,12 +88,6 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-
-
-
-
-
         recyclerView = findViewById(R.id.recyclerViewOnFriendList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -159,6 +153,7 @@ public class FriendList extends AppCompatActivity implements NavigationView.OnNa
         SearchView searchView = (SearchView) item.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 processSearch(query);

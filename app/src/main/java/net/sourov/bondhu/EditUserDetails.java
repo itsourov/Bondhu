@@ -346,11 +346,11 @@ public class EditUserDetails extends AppCompatActivity implements NavigationView
 
     @Override
     public void onBackPressed() {
-       backToaDashboard();
+        backToaDashboard();
     }
 
     private void backToaDashboard() {
-        startActivity(new Intent(EditUserDetails.this,Dashboard.class));
+        startActivity(new Intent(EditUserDetails.this, Dashboard.class));
         finish();
     }
 }

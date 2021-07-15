@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import net.sourov.bondhu.Model.Users;
 import net.sourov.bondhu.auth.LoginActivity;
+import net.sourov.bondhu.settings.SettingsActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -54,6 +55,8 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+
 
         mAuth = FirebaseAuth.getInstance(); //initialize firebase auth system
         myToast = Toast.makeText(getApplicationContext(), null, Toast.LENGTH_SHORT);
@@ -90,6 +93,10 @@ public class Dashboard extends AppCompatActivity implements NavigationView.OnNav
 
         findViewById(R.id.addFriendsOnDashboard).setOnClickListener(v -> {
             startActivity(new Intent(Dashboard.this, AddFriends.class));
+            finish();
+        });
+        findViewById(R.id.settingsOnDashboard).setOnClickListener(v -> {
+            startActivity(new Intent(Dashboard.this, SettingsActivity.class));
             finish();
         });
         findViewById(R.id.friendListOnDashboard).setOnClickListener(v -> {
