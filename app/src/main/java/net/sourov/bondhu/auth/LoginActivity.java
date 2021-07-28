@@ -27,16 +27,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import net.sourov.bondhu.Dashboard;
 import net.sourov.bondhu.EditUserDetails;
 import net.sourov.bondhu.R;
+import net.sourov.bondhu.VerifyActivity;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-    String name, image_url, number;
+    String name,email, image_url, number;
     private static final int RC_SIGN_IN = 4;
     private static final String TAG = "tag";
-    EditText emailInputOnLogin, passInputOnLogin;
-    String email, password;
+    EditText inputNumberOnLogin;
+    String numberInput;
     Toast myToast;
     private FirebaseAuth mAuth;
 
@@ -61,8 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        emailInputOnLogin = findViewById(R.id.inputEmailOnLogin);
-        passInputOnLogin = findViewById(R.id.inputPasswordOnLogin);
+        inputNumberOnLogin = findViewById(R.id.inputNumberOnLogin);
         btnLoginOnLogin = findViewById(R.id.btnGetOtpOnMobileAuth);
 
         spin_kitOnMobileAuth = findViewById(R.id.spin_kitOnMobileAuth);
@@ -71,40 +71,10 @@ public class LoginActivity extends AppCompatActivity {
         btnLoginOnLogin.setOnClickListener(v -> {
 
 
-            email = emailInputOnLogin.getText().toString().trim();
-            password = passInputOnLogin.getText().toString().trim();
-            if (email.isEmpty()) {
-                emailInputOnLogin.setError("email is empty");
-                emailInputOnLogin.requestFocus();
-            } else if (password.isEmpty()) {
-                passInputOnLogin.setError("password is empty");
-                passInputOnLogin.requestFocus();
-            } else {
-                btnLoginOnLogin.setEnabled(false);
-                spin_kitOnMobileAuth.setVisibility(View.VISIBLE);
-                btnLoginOnLogin.setText("Please wait...");
-
-                mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-                    btnLoginOnLogin.setEnabled(true);
-                    btnLoginOnLogin.setText("Log in");
-                    spin_kitOnMobileAuth.setVisibility(View.GONE);
-                    if (task.isSuccessful()) {
-                        btnLoginOnLogin.setEnabled(true);
-                        if (mAuth.getCurrentUser().isEmailVerified()) {
-                            goToDashboard();
-                        } else {
-                            mAuth.getCurrentUser().sendEmailVerification();
-                            myToast.setText("Please verify your email. check your inbox or spamBox");
-                            myToast.show();
-                        }
-
-                    } else {
-                        myToast.setText(Objects.requireNonNull(task.getException()).getMessage());
-                        myToast.show();
-
-                    }
-                });
-            }
+            numberInput = inputNumberOnLogin.getText().toString().trim();
+            Intent intent = new Intent(LoginActivity.this, VerifyActivity.class);
+            intent.putExtra("number",numberInput);
+            startActivity(intent);
         });
         findViewById(R.id.goToSignUpOnLogin).setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, SignUpActivity.class));

@@ -54,40 +54,23 @@
             app:layout_constraintTop_toTopOf="@+id/topViewOnLogin" />
 
         <EditText
-            android:id="@+id/inputEmailOnLogin"
+            android:id="@+id/inputNumberOnLogin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
+            android:text="+88"
             android:background="@drawable/round_border"
-            android:drawableStart="@drawable/ic_email"
+            android:drawableStart="@drawable/ic_call"
             android:drawablePadding="16dp"
             android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
+            android:hint="Number"
+            android:inputType="phone"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2OnLogin" />
 
-        <EditText
-            android:id="@+id/inputPasswordOnLogin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/round_border"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawablePadding="16dp"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputEmailOnLogin" />
 
 
         <Button
@@ -102,7 +85,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inputPasswordOnLogin" />
+            app:layout_constraintTop_toBottomOf="@+id/inputNumberOnLogin" />
 
 
         <TextView

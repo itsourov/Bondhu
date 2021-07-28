@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, Dashboard.class));
             finish();
         }else {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            startActivity(new Intent(MainActivity.this, VerifyActivity.class));
             finish();
         }
     }

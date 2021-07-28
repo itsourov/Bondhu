@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Bondhu">
+        <activity android:name=".VerifyActivity"></activity>
         <activity
             android:name=".settings.SettingsActivity"
             android:configChanges="uiMode" />
